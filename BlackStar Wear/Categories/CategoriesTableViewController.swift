@@ -31,7 +31,7 @@ class CategoriesTableViewController: UITableViewController {
     }
     
     func loadInJSON() {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             self.networkDataFetcher.urlString = self.urlString
             self.networkDataFetcher.fetchTracksCategories { (categoriesJSON) in
                 guard let categoriesJSON = categoriesJSON else { return }
@@ -55,12 +55,12 @@ class CategoriesTableViewController: UITableViewController {
                     }
                 }
                 if reload {
-//                    self.tableView.reloadData()
+                    self.tableView.reloadData()
                 }
                 self.categories = newCategories
                 PersistanceRealm.shared.loadCategories(self.categories)
             }
-        }
+//        }
     }
 
     // MARK: - Table view data source
@@ -81,14 +81,30 @@ class CategoriesTableViewController: UITableViewController {
         let track = categories[indexPath.row]
         cell.nameCategories.text = track.name
 //        DispatchQueue.main.async {
-        cell.imageCategories.image = UIImage(data: track.iconImage)
-//            if let iconImage = track.iconImage, iconImage != "" {
-//                cell.imageCategories.image = self.networkDataFetcher.loadImage(urlImage: iconImage)
-//            }
+//        cell.imageCategories.image = UIImage(data: track.iconImage)
+        if track.iconImage != "" {
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async{
+                DispatchQueue.main.async {
+                    cell.imageCategories.image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+                }
+            }
+        }
 //        }
             
         return cell
     }
+    
+//    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let track = categories[indexPath.row]
+//        cell..nameCategories.text = track.name
+//
+//        //        DispatchQueue.main.async {
+//        //        cell.imageCategories.image = UIImage(data: track.iconImage)
+//        if track.iconImage != "" {
+//            cell.imageCategories.image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+//        }
+//    }
 
     /*
     // Override to support conditional editing of the table view.

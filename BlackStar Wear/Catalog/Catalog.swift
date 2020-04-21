@@ -19,7 +19,8 @@ class Categories: Decodable {
     
     var name: String
     var sortOrder: Int
-    var iconImage: Data
+//    var iconImage: Data
+    var iconImage: String
     var subcategories: [SubCategories]
     
     enum CodingKeys: String, CodingKey {
@@ -40,11 +41,11 @@ class Categories: Decodable {
             self.sortOrder = try container.decode(Int.self, forKey: .sortOrder)
         }
         
-        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
-            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
-        } else {
-            self.iconImage = try container.decode(Data.self, forKey: .iconImage)
-        }
+//        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
+//            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
+//        } else {
+            self.iconImage = try container.decode(String.self, forKey: .iconImage)
+//        }
         
         self.subcategories = try container.decode([SubCategories].self, forKey: .subcategories).sorted { $0.sortOrder < $1.sortOrder }
     }
@@ -52,7 +53,7 @@ class Categories: Decodable {
     init() {
         self.name = ""
         self.sortOrder = 0
-        self.iconImage = Data()
+        self.iconImage = ""
         self.subcategories = []
     }
 }
@@ -60,7 +61,8 @@ class Categories: Decodable {
 class SubCategories: Decodable {
     
     var id: String
-    var iconImage: Data = Data()
+//    var iconImage: Data = Data()
+    var iconImage: String = ""
     var sortOrder: Int = 0
     var name: String = ""
     var type: String?
@@ -82,11 +84,11 @@ class SubCategories: Decodable {
             self.id = try container.decode(String.self, forKey: .id)
         }
         
-        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
-            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
-        } else {
-            self.iconImage = try container.decode(Data.self, forKey: .iconImage)
-        }
+//        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
+//            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
+//        } else {
+            self.iconImage = try container.decode(String.self, forKey: .iconImage)
+//        }
         
         if let sortOrderString = try? container.decode(String.self, forKey: .sortOrder) {
             self.sortOrder = Int(sortOrderString)!
@@ -100,7 +102,7 @@ class SubCategories: Decodable {
     
     init() {
         self.id = ""
-        self.iconImage = Data()
+        self.iconImage = ""
         self.sortOrder = 0
         self.name = ""
 //        self.type = ""

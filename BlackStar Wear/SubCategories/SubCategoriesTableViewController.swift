@@ -44,10 +44,15 @@ class SubCategoriesTableViewController: UITableViewController {
         let track = subCategories[indexPath.row]
         cell.nameSubCategories.text = track.name
 //        DispatchQueue.main.async {
-        cell.imageSubCategories.image = UIImage(data: track.iconImage)
-//            if let iconImage = track.iconImage, iconImage != "" {
-//                cell.imageSubCategories.image = self.networkDataFetcher.loadImage(urlImage: iconImage)
-//            }
+//        cell.imageSubCategories.image = UIImage(data: track.iconImage)
+        if track.iconImage != "" {
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async{
+                DispatchQueue.main.async {
+                    cell.imageSubCategories.image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+                }
+            }
+        }
 //        }
 
         return cell

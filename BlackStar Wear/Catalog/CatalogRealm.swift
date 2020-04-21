@@ -19,14 +19,16 @@ class CategoriesRealm: Object {
     
     @objc dynamic var name: String = ""
     @objc dynamic var sortOrder: Int = 0
-    @objc dynamic var iconImage: Data = Data()
+//    @objc dynamic var iconImage: Data = Data()
+    @objc dynamic var iconImage: String = ""
     var subcategories = List<SubCategoriesRealm>()
 }
 
 class SubCategoriesRealm: Object {
     
     @objc dynamic var id: String = ""
-    @objc dynamic var iconImage: Data = Data()
+//    @objc dynamic var iconImage: Data = Data()
+@objc dynamic var iconImage: String = ""
     @objc dynamic var sortOrder: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var type: String? = nil
