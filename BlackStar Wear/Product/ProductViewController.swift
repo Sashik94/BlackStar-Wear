@@ -55,24 +55,28 @@ class ProductViewController: UIViewController {
     }
     
     func loadImage() {
-        arrayImages.append(UIImage(data: products[productsID].mainImage)!)
-        for i in products[productsID].productImages {
+        self.arrayImages.append(self.networkDataFetcher.loadImage(urlImage: self.products[self.productsID].mainImage))
+        for i in self.products[self.productsID].productImages {
             if let url = i["imageURL"] {
-                arrayImages.append(UIImage(data: try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(url)")!))!)
+                self.arrayImages.append(self.networkDataFetcher.loadImage(urlImage: url))
             }
         }
     }
     
     func drowImage() {
-        self.loadImage()
-        self.imageScrollView.contentSize = CGSize(width: (self.imageScrollView.bounds.height * 0.75) * CGFloat(self.arrayImages.count), height: self.imageScrollView.bounds.height)
-        self.pageControl.numberOfPages = self.arrayImages.count
-        for (index, image) in self.arrayImages.enumerated() {
-            if type(of: image) == UIImage.self {
-                let imageView = UIImageView()
-                imageView.image = image
-                imageView.frame = CGRect(x: (self.imageScrollView.bounds.height * 0.75) * CGFloat(index), y: 0, width: self.imageScrollView.bounds.height * 0.75, height: self.imageScrollView.bounds.height)
-                self.imageScrollView.addSubview(imageView)
+        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos : .userInteractive, attributes: .concurrent).async {
+            self.loadImage()
+            DispatchQueue.main.async {
+                self.imageScrollView.contentSize = CGSize(width: (self.imageScrollView.bounds.height * 0.75) * CGFloat(self.arrayImages.count), height: self.imageScrollView.bounds.height)
+                self.pageControl.numberOfPages = self.arrayImages.count
+                for (index, image) in self.arrayImages.enumerated() {
+                    if type(of: image) == UIImage.self {
+                        let imageView = UIImageView()
+                        imageView.image = image
+                        imageView.frame = CGRect(x: (self.imageScrollView.bounds.height * 0.75) * CGFloat(index), y: 0, width: self.imageScrollView.bounds.height * 0.75, height: self.imageScrollView.bounds.height)
+                        self.imageScrollView.addSubview(imageView)
+                    }
+                }
             }
         }
     }
@@ -82,7 +86,7 @@ class ProductViewController: UIViewController {
             sizeButton.setTitle("Размер: \(offer.size)", for: .normal)
         }
         
-        colorButton.setImage(image: UIImage(data: products[productsID].colorImageURL), inFrame: CGRect(x: colorButton.titleLabel!.frame.maxX - 18, y: colorButton.imageView!.frame.midY - colorButton.titleLabel!.frame.height / 2, width: 20, height: 20), for: .normal)
+        colorButton.setImage(image: self.networkDataFetcher.loadImage(urlImage: products[productsID].colorImageURL), inFrame: CGRect(x: colorButton.titleLabel!.frame.maxX - 18, y: colorButton.imageView!.frame.midY - colorButton.titleLabel!.frame.height / 2, width: 20, height: 20), for: .normal)
         colorButton.imageView?.layer.cornerRadius = (colorButton.imageView?.bounds.height)! / 2
         colorButton.imageView?.layer.borderWidth = 1
         colorButton.imageView?.layer.borderColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
@@ -171,7 +175,6 @@ class ProductViewController: UIViewController {
     func fillingNewController(_ id: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "ProductViewController") as! ProductViewController
-//        vc.modalPresentationStyle = .fullScreen
         vc.productsID = id
         vc.products = products
         definesPresentationContext = false
@@ -193,40 +196,45 @@ extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Recommend Cell", for: indexPath) as! RecommendCollectionViewCell
-        
-        let track = recommendProducts[indexPath.row]
-//        DispatchQueue.main.async {
-        cell.recommendImageView.image = UIImage(data: track.mainImage)
-//            cell.recommendImageView.image = self.networkDataFetcher.loadImage(urlImage: track.mainImage)
-//        }
-        if let oldPrice = track.oldPrice {
-            let attributeOldPriceString: NSMutableAttributedString =  NSMutableAttributedString(string: numberFormatter(oldPrice) + " руб.")
-            attributeOldPriceString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeOldPriceString.length))
-            cell.recommendOldPriceLabel.attributedText = attributeOldPriceString
-        } else {
-            cell.recommendOldPriceLabel.isHidden = true
-        }
-        if let price = track.price {
-            cell.recommendPriceLabel.text = numberFormatter(price) + " руб."
-        }
-        cell.recommendNameLabel.text = track.name
-        if let discount = track.tag {
-            cell.recommendDiscountLabel.backgroundColor = .red
-            if discount == "new" {
-                cell.recommendDiscountLabel.backgroundColor = #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1)
-            }
-            cell.recommendDiscountLabel.text = discount
-        } else {
-            cell.recommendDiscountLabel.isHidden = true
-        }
-        recommendLabel.isHidden = false
-        recommendCollectionView.isHidden = false
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = cell as! RecommendCollectionViewCell
+        DispatchQueue.global(qos: .userInteractive).async {
+            let track = self.recommendProducts[indexPath.row]
+            let image = self.networkDataFetcher.loadImage(urlImage: track.mainImage)
+            DispatchQueue.main.async {
+                cell.recommendImageView.image = image
+                if let oldPrice = track.oldPrice {
+                    let attributeOldPriceString: NSMutableAttributedString =  NSMutableAttributedString(string: self.numberFormatter(oldPrice) + " руб.")
+                    attributeOldPriceString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeOldPriceString.length))
+                    cell.recommendOldPriceLabel.attributedText = attributeOldPriceString
+                } else {
+                    cell.recommendOldPriceLabel.isHidden = true
+                }
+                if let price = track.price {
+                    cell.recommendPriceLabel.text = self.numberFormatter(price) + " руб."
+                }
+                cell.recommendNameLabel.text = track.name
+                if let discount = track.tag {
+                    cell.recommendDiscountLabel.backgroundColor = .red
+                    if discount == "new" {
+                        cell.recommendDiscountLabel.backgroundColor = #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1)
+                    }
+                    cell.recommendDiscountLabel.text = discount
+                } else {
+                    cell.recommendDiscountLabel.isHidden = true
+                }
+                self.recommendLabel.isHidden = false
+                self.recommendCollectionView.isHidden = false
+            }
+        }
+    }
+    
     // MARK: - CollectionViewFlowLayoutDelegate
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let w = (collectionView.bounds.width - 26) / 2
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //        let w = (collectionView.bounds.width - 26) / 2
 //        return CGSize(width: w, height: w * 1.75)
 //    }
 }

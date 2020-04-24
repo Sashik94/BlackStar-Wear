@@ -20,7 +20,7 @@ class CategoriesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        categories = PersistanceRealm.shared.downloadCategories()
+//        categories = PersistanceRealm.shared.downloadCategories()
         loadInJSON()
         
         // Uncomment the following line to preserve selection between presentations
@@ -54,10 +54,11 @@ class CategoriesTableViewController: UITableViewController {
                         }
                     }
                 }
-                if reload {
-                    self.tableView.reloadData()
-                }
                 self.categories = newCategories
+//                if reload {
+                    self.tableView.reloadData()
+//                }
+                
                 PersistanceRealm.shared.loadCategories(self.categories)
             }
 //        }
@@ -77,34 +78,22 @@ class CategoriesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Categories cell", for: indexPath) as! CategoriesTableViewCell
-
-        let track = categories[indexPath.row]
-        cell.nameCategories.text = track.name
-//        DispatchQueue.main.async {
-//        cell.imageCategories.image = UIImage(data: track.iconImage)
-        if track.iconImage != "" {
-            let queue = DispatchQueue.global(qos: .utility)
-            queue.async{
-                DispatchQueue.main.async {
-                    cell.imageCategories.image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
-                }
-            }
-        }
-//        }
-            
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let track = categories[indexPath.row]
-//        cell..nameCategories.text = track.name
-//
-//        //        DispatchQueue.main.async {
-//        //        cell.imageCategories.image = UIImage(data: track.iconImage)
-//        if track.iconImage != "" {
-//            cell.imageCategories.image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! CategoriesTableViewCell
+        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+            let track = self.categories[indexPath.row]
+            let image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+            DispatchQueue.main.async {
+                cell.nameCategories.text = track.name
+                if track.iconImage != "" {
+                    cell.imageCategories.image = image
+                }
+            }
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

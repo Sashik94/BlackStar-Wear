@@ -118,8 +118,8 @@ class Products: Decodable {
     var collection: String?
     var productsDescription: String?
     var colorName: String
-    var colorImageURL: Data
-    var mainImage: Data
+    var colorImageURL: String
+    var mainImage: String
     var productImages: [[String: String]]
     var offers: [[String: String]]
     var recommendedProductIDs: [String]
@@ -164,17 +164,9 @@ class Products: Decodable {
         self.productsDescription = try? container.decode(String.self, forKey: .productsDescription)
         self.colorName = try container.decode(String.self, forKey: .colorName)
         
-        if let colorImageURLString = try? container.decode(String.self, forKey: .colorImageURL) {
-            self.colorImageURL = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(colorImageURLString)")!)
-        } else {
-            self.colorImageURL = try container.decode(Data.self, forKey: .colorImageURL)
-        }
+        self.colorImageURL = try container.decode(String.self, forKey: .colorImageURL)
 
-        if let mainImageString = try? container.decode(String.self, forKey: .mainImage) {
-            self.mainImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(mainImageString)")!)
-        } else {
-            self.mainImage = try container.decode(Data.self, forKey: .mainImage)
-        }
+        self.mainImage = try container.decode(String.self, forKey: .mainImage)
         
         //productImages
         self.productImages = try container.decode([[String: String]].self, forKey: .productImages)

@@ -55,36 +55,38 @@ class ProductsCollectionViewController: UICollectionViewController, UICollection
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProductsCollectionViewCell
-        
-        let track = products[indexPath.row]
-//        DispatchQueue.main.async {
-        cell.productsImage.image = UIImage(data: track.mainImage)
-//            cell.productsImage.image = self.networkDataFetcher.loadImage(urlImage: track.mainImage)
-//        }
-        
-        if let oldPrice = track.oldPrice {
-            let attributeOldPriceString: NSMutableAttributedString =  NSMutableAttributedString(string: numberFormatter(oldPrice) + " руб.")
-            attributeOldPriceString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeOldPriceString.length))
-            cell.productsOldPriceLabel.attributedText = attributeOldPriceString
-        } else {
-            cell.productsOldPriceLabel.text = ""
-//            cell.productsOldPriceLabel.isHidden = true
-        }
-        if let price = track.price {
-            cell.productsPriceLabel.text = numberFormatter(price) + " руб."
-        }
-        cell.productsNameLabel.text = track.name
-        if let discount = track.tag {
-            cell.productsDiscountLabel.backgroundColor = .red
-            if discount == "new" {
-                cell.productsDiscountLabel.backgroundColor = #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1)
-            }
-            cell.productsDiscountLabel.text = discount
-        } else {
-            cell.productsDiscountLabel.isHidden = true
-        }
-        
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = cell as! ProductsCollectionViewCell
+        DispatchQueue.global(qos: .userInteractive).async {
+            let track = self.products[indexPath.row]
+            let image = self.networkDataFetcher.loadImage(urlImage: track.mainImage)
+            DispatchQueue.main.async {
+                cell.productsImage.image = image
+                if let oldPrice = track.oldPrice {
+                    let attributeOldPriceString: NSMutableAttributedString =  NSMutableAttributedString(string: self.numberFormatter(oldPrice) + " руб.")
+                    attributeOldPriceString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeOldPriceString.length))
+                    cell.productsOldPriceLabel.attributedText = attributeOldPriceString
+                } else {
+                    cell.productsOldPriceLabel.text = ""
+                }
+                if let price = track.price {
+                    cell.productsPriceLabel.text = self.numberFormatter(price) + " руб."
+                }
+                cell.productsNameLabel.text = track.name
+                if let discount = track.tag {
+                    cell.productsDiscountLabel.backgroundColor = .red
+                    if discount == "new" {
+                        cell.productsDiscountLabel.backgroundColor = #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1)
+                    }
+                    cell.productsDiscountLabel.text = discount
+                } else {
+                    cell.productsDiscountLabel.isHidden = true
+                }
+            }
+        }
     }
 
     // MARK: UICollectionViewDelegate

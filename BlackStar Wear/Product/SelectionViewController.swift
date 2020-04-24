@@ -13,6 +13,8 @@ class SelectionViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var heightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    let networkDataFetcher = NetworkDataFetcher()
     var productController: ProductViewController!
 //    var products: [Products] = []
     var selectionColorArray: [Int]?
@@ -49,7 +51,7 @@ class SelectionViewController: UIViewController, UITableViewDelegate, UITableVie
             titleLabel.text = ""
             let track = productController.products[selectionColorArray[indexPath.row]]
             cell.nameLabel.text = track.colorName
-            cell.colorImageView.image = UIImage(data: track.colorImageURL)
+            cell.colorImageView.image = self.networkDataFetcher.loadImage(urlImage: track.colorImageURL)
             cell.colorImageView.layer.cornerRadius = cell.colorImageView.bounds.height / 2
             cell.colorImageView.layer.borderWidth = 1
             cell.colorImageView.layer.borderColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
