@@ -388,6 +388,7 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="4Ud-zu-ixW"/>
+                                                    <constraint firstAttribute="width" constant="335" id="bw7-gE-vdH"/>
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uf4-Jj-atE">
@@ -401,6 +402,9 @@
                                                 <state key="normal" title="Добавить в корзину">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addInBasket:" destination="f8f-Ob-EOy" eventType="touchUpInside" id="t7A-Ro-MAD"/>
+                                                </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Attributes" translatesAutoresizingMaskIntoConstraints="NO" id="1U2-85-0kL">
                                                 <rect key="frame" x="20" y="736.33333333333337" width="335" height="33"/>
@@ -528,7 +532,6 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="rqJ-i9-SXx" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" id="6j4-cz-AD0"/>
-                                            <constraint firstItem="4JW-me-36s" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" constant="20" id="6wA-8A-7qo"/>
                                             <constraint firstItem="sTk-oj-BH0" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" constant="20" id="7Hc-Eh-WWU"/>
                                             <constraint firstAttribute="trailing" secondItem="d65-SX-3Mb" secondAttribute="trailing" id="Cbt-tX-qoD"/>
                                             <constraint firstItem="GAg-D9-psS" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" constant="20" id="G3z-Le-W0M"/>
@@ -550,7 +553,6 @@
                                             <constraint firstAttribute="trailing" secondItem="GAg-D9-psS" secondAttribute="trailing" constant="20" id="lMM-zl-Wmd"/>
                                             <constraint firstAttribute="trailing" secondItem="tl5-pa-QTE" secondAttribute="trailing" constant="20" id="lfD-gV-1Ay"/>
                                             <constraint firstItem="O0o-5K-Q3B" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" constant="20" id="q9w-GQ-HCY"/>
-                                            <constraint firstAttribute="trailing" secondItem="4JW-me-36s" secondAttribute="trailing" constant="20" id="rAo-3Y-fCk"/>
                                             <constraint firstAttribute="trailing" secondItem="uf4-Jj-atE" secondAttribute="trailing" id="rQg-oh-Nuh"/>
                                             <constraint firstItem="1U2-85-0kL" firstAttribute="leading" secondItem="Fkz-x4-bG1" secondAttribute="leading" constant="20" id="sPw-v7-40L"/>
                                         </constraints>
@@ -603,7 +605,7 @@
         <!--Selection View Controller-->
         <scene sceneID="fAJ-el-GpG">
             <objects>
-                <viewController wantsFullScreenLayout="YES" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="oZU-8o-533" customClass="SelectionViewController" customModule="BlackStar_Wear" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectionSize" wantsFullScreenLayout="YES" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="oZU-8o-533" customClass="SelectionViewController" customModule="BlackStar_Wear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZCh-db-SKL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -787,7 +789,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="C8R-UU-mzh">
                                                     <rect key="frame" x="121" y="8" width="234" height="124"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOg-Ho-5KW">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOg-Ho-5KW">
                                                             <rect key="frame" x="182.33333333333331" y="0.0" width="51.666666666666657" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -819,7 +821,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nn2-Sb-9OG">
                                                             <rect key="frame" x="190" y="100" width="44" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -844,6 +846,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="EgA-V1-Jkg" id="k1Q-91-70U"/>
+                                    <outlet property="delegate" destination="EgA-V1-Jkg" id="dzA-yy-98Z"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZh-wv-fke">
                                 <rect key="frame" x="20" y="689" width="335" height="40"/>

@@ -40,19 +40,18 @@ class SubCategoriesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubCategories cell", for: indexPath) as! SubCategoriesTableViewCell
+        let track = self.subCategories[indexPath.row]
+        cell.nameSubCategories.text = track.name
         return cell
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! SubCategoriesTableViewCell
         DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos : .userInteractive, attributes: .concurrent).async {
+            let cell = cell as! SubCategoriesTableViewCell
             let track = self.subCategories[indexPath.row]
-            let image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+            let image = track.iconImage != "" ? self.networkDataFetcher.loadImage(urlImage: track.iconImage) : nil
             DispatchQueue.main.async {
-                cell.nameSubCategories.text = track.name
-                if track.iconImage != "" {
-                    cell.imageSubCategories.image = image
-                }
+                cell.imageSubCategories.image = image
             }
         }
     }

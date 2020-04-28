@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CategoriesTableViewController: UITableViewController {
     
@@ -15,12 +16,14 @@ class CategoriesTableViewController: UITableViewController {
     let urlString = "https://blackstarshop.ru/index.php?route=api/v1/categories"
     
     let networkDataFetcher = NetworkDataFetcher()
+    private let realm = try! Realm()
     var categories: [Categories] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        categories = PersistanceRealm.shared.downloadCategories()
+        tabBarController?.tabBar.items?[1].badgeValue = String(realm.objects(ProductInBasketRealm.self).count)
         loadInJSON()
         
         // Uncomment the following line to preserve selection between presentations
@@ -35,7 +38,7 @@ class CategoriesTableViewController: UITableViewController {
             self.networkDataFetcher.urlString = self.urlString
             self.networkDataFetcher.fetchTracksCategories { (categoriesJSON) in
                 guard let categoriesJSON = categoriesJSON else { return }
-                let reload = self.categories.count == 0 ? true : false
+//                let reload = self.categories.count == 0 ? true : false
                 var newCategories: [Categories] = []
                 for category in categoriesJSON {
                     newCategories.append(category.value)
@@ -78,19 +81,18 @@ class CategoriesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Categories cell", for: indexPath) as! CategoriesTableViewCell
+        let track = self.categories[indexPath.row]
+        cell.nameCategories.text = track.name
         return cell
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! CategoriesTableViewCell
         DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+            let cell = cell as! CategoriesTableViewCell
             let track = self.categories[indexPath.row]
-            let image = self.networkDataFetcher.loadImage(urlImage: track.iconImage)
+            let image = track.iconImage != "" ? self.networkDataFetcher.loadImage(urlImage: track.iconImage) : nil
             DispatchQueue.main.async {
-                cell.nameCategories.text = track.name
-                if track.iconImage != "" {
-                    cell.imageCategories.image = image
-                }
+                cell.imageCategories.image = image
             }
         }
     }

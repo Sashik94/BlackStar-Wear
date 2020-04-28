@@ -6,6 +6,7 @@
 //  Copyright © 2020 Александр Осипов. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import RealmSwift
 
@@ -58,11 +59,77 @@ class PersistanceRealm {
         }
     }
     
-//    func load(_ forecast: Forecast) {
-//        try! realm.write {
-//            realm.add(forecast)
-//        }
-//    }
+    func loadProducts(_ allProducts: [Products], _ idSubCategories: String) {
+        try! realm.write {
+            for products in allProducts {
+                if (realm.objects(ProductsRealm.self).filter("article == '\(products.article!)' && colorName == '\(products.colorName)'").first != nil) {
+                    continue
+                } else {
+                    let newProduct = ProductsRealm()
+                    newProduct.owner = idSubCategories
+                    newProduct.name = products.name
+                    newProduct.englishName = products.englishName
+                    newProduct.sortOrder = products.sortOrder
+                    newProduct.article = products.article
+                    newProduct.collection = products.collection
+                    newProduct.productsDescription = products.productsDescription
+                    newProduct.colorName = products.colorName
+                    newProduct.colorImageURL = products.colorImageURL
+                    newProduct.mainImage = products.mainImage
+                    newProduct.productImages = List<productImagesRealm>()
+                    for img in products.productImages {
+                        let newProductImages = productImagesRealm()
+                        newProductImages.imageURL = img["imageURL"]!
+                        newProductImages.sortOrder = img["sortOrder"]!
+                        newProduct.productImages.append(newProductImages)
+                    }
+                    newProduct.offers = List<offersRealm>()
+                    for offer in products.offers {
+                        let newOffers = offersRealm()
+                        newOffers.size = offer["size"]!
+                        newOffers.productOfferID = offer["productOfferID"]!
+                        newOffers.quantity = offer["quantity"]!
+                        newProduct.offers.append(newOffers)
+                    }
+                    newProduct.recommendedProductIDs = List<String>()
+                    for id in products.recommendedProductIDs {
+                        newProduct.recommendedProductIDs.append(id)
+                    }
+                    newProduct.price = products.price
+                    newProduct.oldPrice = products.oldPrice
+                    newProduct.tag = products.tag
+                    newProduct.attributes = List<attributesRealm>()
+                    if let attributes = products.attributes {
+                        for attribute in attributes {
+                            let newAttribute = attributesRealm()
+                            newAttribute.name = attribute.first!.key
+                            newAttribute.value = attribute.first!.value
+                            newProduct.attributes.append(newAttribute)
+                        }
+                    }
+                    realm.add(newProduct)
+                }
+                realm.refresh()
+            }
+        }
+    }
+    
+    func loadProductInBasket(idSubCategories: String, products: [Products], productID: Int, mainImage: Data, size: String) {
+        try! realm.write {
+            let newProduct = ProductInBasketRealm()
+            newProduct.ProductID = productID
+            newProduct.name = products[productID].name
+            newProduct.mainImage = mainImage
+            newProduct.price = products[productID].price
+            newProduct.oldPrice = products[productID].oldPrice
+            newProduct.size = size
+            for product in realm.objects(ProductsRealm.self).filter("owner == '\(idSubCategories)'") {
+                newProduct.products.append(product)
+            }
+            realm.add(newProduct)
+            realm.refresh()
+        }
+    }
 
     func downloadCategories() -> [Categories] {
         
@@ -85,13 +152,19 @@ class PersistanceRealm {
             }
             categories.append(category)
         }
-        
         return categories
     }
-
+    
     func deleteCategories() {
         try! realm.write {
             realm.deleteAll()
+        }
+    }
+    
+    func deleteProduct(_ id: Int) {
+        let record = realm.objects(ProductInBasketRealm.self)[id]
+        try! realm.write {
+            realm.delete(record)
         }
     }
 }

@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C3F9385C416E87B3694D49D /* Pods_BlackStar_Wear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E05ABD38DBB3FF023700D77 /* Pods_BlackStar_Wear.framework */; };
 		3B11F888242D482D00D2B5E1 /* RecommendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11F887242D482D00D2B5E1 /* RecommendCollectionViewCell.swift */; };
 		3B199D4E2423D54E00F5AEB6 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B199D4D2423D54E00F5AEB6 /* Extension.swift */; };
 		3B22DDFE2431029200515A05 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B22DDFD2431029200515A05 /* SelectionViewController.swift */; };
@@ -32,10 +31,12 @@
 		3BBABBCF240D957200F1F9FE /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBABBCE240D957200F1F9FE /* CategoriesTableViewCell.swift */; };
 		3BCE22B02421245A0001C159 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE22AF2421245A0001C159 /* ProductViewController.swift */; };
 		3BFCADC62434D60100043C23 /* SelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFCADC52434D60100043C23 /* SelectionTableViewCell.swift */; };
+		57BB68449E7470B7BC9F2A20 /* Pods_BlackStar_Wear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0184642940F3BFFCB133937C /* Pods-BlackStar Wear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.release.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.release.xcconfig"; sourceTree = "<group>"; };
+		3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackStar_Wear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B11F887242D482D00D2B5E1 /* RecommendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendCollectionViewCell.swift; sourceTree = "<group>"; };
 		3B199D4D2423D54E00F5AEB6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		3B22DDFD2431029200515A05 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
@@ -62,8 +63,9 @@
 		3BBABBCC240D93ED00F1F9FE /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
 		3BBABBCE240D957200F1F9FE /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
 		3BCE22AF2421245A0001C159 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		3BF0078C24585B0A00B59335 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BF0079024586DC100B59335 /* libRealmSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRealmSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFCADC52434D60100043C23 /* SelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewCell.swift; sourceTree = "<group>"; };
-		5E05ABD38DBB3FF023700D77 /* Pods_BlackStar_Wear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackStar_Wear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BEAAF049C857F9C9A6EF6A /* Pods-BlackStar Wear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.debug.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B9EF4462444E4B20002086A /* RealmSwift.framework in Frameworks */,
-				1C3F9385C416E87B3694D49D /* Pods_BlackStar_Wear.framework in Frameworks */,
+				57BB68449E7470B7BC9F2A20 /* Pods_BlackStar_Wear.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,9 +182,11 @@
 		CFD57DFAF2544B41123151C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3BF0079024586DC100B59335 /* libRealmSwift.a */,
+				3BF0078C24585B0A00B59335 /* Realm.framework */,
 				3B9EF4452444E4B20002086A /* RealmSwift.framework */,
 				3B22DE0F24314CC200515A05 /* Alamofire.framework */,
-				5E05ABD38DBB3FF023700D77 /* Pods_BlackStar_Wear.framework */,
+				3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -207,7 +211,7 @@
 				3BBABBAE240C01FE00F1F9FE /* Sources */,
 				3BBABBAF240C01FE00F1F9FE /* Frameworks */,
 				3BBABBB0240C01FE00F1F9FE /* Resources */,
-				F7DD469DFC1135FB90E4FC66 /* [CP] Embed Pods Frameworks */,
+				B2A676E1B635327D4D9151D6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -287,7 +291,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F7DD469DFC1135FB90E4FC66 /* [CP] Embed Pods Frameworks */ = {
+		B2A676E1B635327D4D9151D6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

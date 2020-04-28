@@ -28,7 +28,7 @@ class SubCategoriesRealm: Object {
     
     @objc dynamic var id: String = ""
 //    @objc dynamic var iconImage: Data = Data()
-@objc dynamic var iconImage: String = ""
+    @objc dynamic var iconImage: String = ""
     @objc dynamic var sortOrder: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var type: String? = nil
@@ -37,7 +37,7 @@ class SubCategoriesRealm: Object {
 
 class ProductsRealm: Object {
     
-    @objc dynamic var owner: SubCategoriesRealm!
+    @objc dynamic var owner: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var englishName: String = ""
     @objc dynamic var sortOrder: Int = 0
@@ -45,8 +45,8 @@ class ProductsRealm: Object {
     @objc dynamic var collection: String? = nil
     @objc dynamic var productsDescription: String?
     @objc dynamic var colorName: String = ""
-    @objc dynamic var colorImageURL: Data = Data()
-    @objc dynamic var mainImage: Data = Data()
+    @objc dynamic var colorImageURL: String = ""
+    @objc dynamic var mainImage: String = ""
     var productImages = List<productImagesRealm>()
     var offers = List<offersRealm>()
     var recommendedProductIDs = List<String>()
@@ -54,6 +54,18 @@ class ProductsRealm: Object {
     @objc dynamic var oldPrice: String? = nil
     @objc dynamic var tag: String? = nil
     var attributes = List<attributesRealm>()
+    
+}
+
+class ProductInBasketRealm: Object {
+    
+    @objc dynamic var ProductID: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var mainImage: Data = Data()
+    @objc dynamic var price: String? = nil
+    @objc dynamic var oldPrice: String? = nil
+    @objc dynamic var size: String = ""
+    var products = List<ProductsRealm>()
     
 }
 
