@@ -11,6 +11,7 @@ import RealmSwift
 
 class ProductViewController: UIViewController {
     
+    @IBOutlet weak var productNavigationItem: UINavigationItem!
     @IBOutlet weak var mainImageView: UIView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -18,11 +19,13 @@ class ProductViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var discountLabel: UILabel!
+    @IBOutlet weak var bottomStackView: UIStackView!
     @IBOutlet weak var colorButton: AddProfilePictureView!
     @IBOutlet weak var sizeButton: UIButton!
     @IBOutlet weak var attributesTextView: UITextView!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var recommendLabel: UILabel!
+    @IBOutlet weak var recommendView: UIView!
     @IBOutlet weak var recommendCollectionView: UICollectionView!
     
     static var shared = ProductViewController()
@@ -31,6 +34,7 @@ class ProductViewController: UIViewController {
     var idSubCategories: String!
     var productsID: Int!
     var products: [Products]!
+    var productsRealm: [ProductsRealm]!
     var recommendProducts: [Products] = []
     var arrayImages: [UIImage] = []
     var indexColorArray: [Int] = []
@@ -41,6 +45,10 @@ class ProductViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if products == nil {
+            products = PersistanceRealm.shared.downloadProducts(idSubCategories)
+        }
         
         for (index, value) in products.enumerated() {
             if value.article == products[productsID].article {
@@ -53,9 +61,14 @@ class ProductViewController: UIViewController {
         
 //        loadImage()
         drowImage()
-        fillingButton()
+//        fillingButton()
         filling()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fillingButton()
     }
     
     func loadImage() {
@@ -138,8 +151,8 @@ class ProductViewController: UIViewController {
             attributeAttributesString.append(NSMutableAttributedString(string: "Артикул: ", attributes: [NSMutableAttributedString.Key.font : UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)]))
             attributeAttributesString.append(NSMutableAttributedString(string: article + "\n", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: UIFont.systemFontSize)]))
         }
-        if let attributes = product.attributes {
-            for attribute in attributes {
+        if product.attributes.count > 0 {
+            for attribute in product.attributes {
                 attributeAttributesString.append(NSMutableAttributedString(string: attribute.first!.key + ": ", attributes: [NSMutableAttributedString.Key.font : UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)]))
                 attributeAttributesString.append(NSMutableAttributedString(string: attribute.first!.value + "\n", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: UIFont.systemFontSize)]))
             }
@@ -158,8 +171,6 @@ class ProductViewController: UIViewController {
     }
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     
     @IBAction func addInBasket(_ sender: UIButton) {
         if let size = offer?.size {
@@ -205,6 +216,7 @@ class ProductViewController: UIViewController {
         let vc = storyboard.instantiateViewController(identifier: "ProductViewController") as! ProductViewController
         vc.productsID = id
         vc.products = products
+        vc.productNavigationItem.title = products[id].name
         definesPresentationContext = false
         show(vc, sender: nil)
     }
@@ -216,7 +228,7 @@ extension ProductViewController: UIScrollViewDelegate {
     }
 }
 
-extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataSource { //}, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recommendProducts.count
@@ -247,7 +259,7 @@ extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.recommendDiscountLabel.isHidden = true
         }
         self.recommendLabel.isHidden = false
-        self.recommendCollectionView.isHidden = false
+        self.recommendView.isHidden = false
         return cell
     }
     
@@ -263,9 +275,10 @@ extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     // MARK: - CollectionViewFlowLayoutDelegate
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        let w = (collectionView.bounds.width - 26) / 2
-//        return CGSize(width: w, height: w * 1.75)
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let h = collectionView.bounds.height
+//        return CGSize(width: h * 0.75 , height: h)
 //    }
 }
 

@@ -13,6 +13,8 @@ private let reuseIdentifier = "Products Cell"
 
 class ProductsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var productsNavigationItem: UINavigationItem!
+    
     var idSubCategories: String!
     let urlString = "https:blackstarshop.ru/index.php?route=api/v1/products&cat_id="
     var networkDataFetcher = NetworkDataFetcher()
@@ -21,34 +23,24 @@ class ProductsCollectionViewController: UICollectionViewController, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Register cell classes
-        //        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        // Do any additional setup after loading the view.
-        self.networkDataFetcher.urlString = self.urlString + self.idSubCategories
-        self.networkDataFetcher.fetchTracksProducts { (productsJSON) in
-            guard let productsJSON = productsJSON else { return }
-            for (_, product) in Array(productsJSON).sorted(by: {$0.0 < $1.0}) {
-                self.products.append(product)
+        products = PersistanceRealm.shared.downloadProducts(idSubCategories)
+        if products.isEmpty {
+            networkDataFetcher.urlString = urlString + idSubCategories
+            networkDataFetcher.fetchTracksProducts { (productsJSON) in
+                guard let productsJSON = productsJSON else { return }
+                for (_, product) in Array(productsJSON).sorted(by: {$0.0 < $1.0}) {
+                    self.products.append(product)
+                }
+                self.products = self.products.sorted { $0.sortOrder < $1.sortOrder }
+                self.collectionView.reloadData()
+                
+                PersistanceRealm.shared.loadProducts(self.products, self.idSubCategories)
             }
-            self.products = self.products.sorted { $0.sortOrder < $1.sortOrder }
-            self.collectionView.reloadData()
-            
-            PersistanceRealm.shared.loadProducts(self.products, self.idSubCategories)
         }
     }
     
-    // MARK: UICollectionViewDataSource
-
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-
-
+    // MARK: UICollectionViewDataSourceё
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return products.count
@@ -92,46 +84,16 @@ class ProductsCollectionViewController: UICollectionViewController, UICollection
             }
         }
     }
-
-    // MARK: UICollectionViewDelegate
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
     
     // MARK: - CollectionViewFlowLayoutDelegate
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let w = (collectionView.bounds.width - 26) / 2
         return CGSize(width: w, height: w * 1.75)
     }
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let collectionViewCell = sender as! UICollectionViewCell
         let indexPath = collectionView.indexPath(for: collectionViewCell)!//RealmViewController.records[indexPath.row]
@@ -141,6 +103,7 @@ class ProductsCollectionViewController: UICollectionViewController, UICollection
             PVC.productsID = indexPath.row
             PVC.products = products
             PVC.idSubCategories = idSubCategories
+            PVC.productNavigationItem.title = products[indexPath.row].name
             }
     }
 }

@@ -21,10 +21,24 @@ class PersistanceRealm {
                     category.name = categories.name
                     category.sortOrder = categories.sortOrder
                     category.iconImage = categories.iconImage
+//                    if category.iconImageData.isEmpty {
+//                        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                            category.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(categories.iconImage)")!)
+//                        }
+//                    } else {
+                        category.iconImageData = categories.iconImageData
+//                    }
                     for subCategory in categories.subcategories {
                         if let subCategoryRealm = category.subcategories.filter("name == '\(subCategory.name)'").first {
                             subCategoryRealm.id = subCategory.id
                             subCategoryRealm.iconImage = subCategory.iconImage
+//                            if subCategoryRealm.iconImageData.isEmpty {
+//                                DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                                    subCategoryRealm.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(subCategory.iconImage)")!)
+//                                }
+//                            } else {
+                                subCategoryRealm.iconImageData = subCategory.iconImageData
+//                            }
                             subCategoryRealm.sortOrder = subCategory.sortOrder
                             subCategoryRealm.name = subCategory.name
                             subCategoryRealm.type = subCategory.type
@@ -32,6 +46,13 @@ class PersistanceRealm {
                             let subCategoryRealm = SubCategoriesRealm()
                             subCategoryRealm.id = subCategory.id
                             subCategoryRealm.iconImage = subCategory.iconImage
+//                            if subCategoryRealm.iconImageData.isEmpty {
+//                                DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                                    subCategoryRealm.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(subCategory.iconImage)")!)
+//                                }
+//                            } else {
+                                subCategoryRealm.iconImageData = subCategory.iconImageData
+//                            }
                             subCategoryRealm.sortOrder = subCategory.sortOrder
                             subCategoryRealm.name = subCategory.name
                             subCategoryRealm.type = subCategory.type
@@ -43,10 +64,24 @@ class PersistanceRealm {
                     newCategory.name = categories.name
                     newCategory.sortOrder = categories.sortOrder
                     newCategory.iconImage = categories.iconImage
+//                    if newCategory.iconImageData.isEmpty {
+//                        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                            newCategory.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(categories.iconImage)")!)
+//                        }
+//                    } else {
+                        newCategory.iconImageData = categories.iconImageData
+//                    }
                     for subCategory in categories.subcategories {
                         let newSubcategories = SubCategoriesRealm()
                         newSubcategories.id = subCategory.id
                         newSubcategories.iconImage = subCategory.iconImage
+//                        if newSubcategories.iconImageData.isEmpty {
+//                            DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                                newSubcategories.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(subCategory.iconImage)")!)
+//                            }
+//                        } else {
+                            newSubcategories.iconImageData = subCategory.iconImageData
+//                        }
                         newSubcategories.sortOrder = subCategory.sortOrder
                         newSubcategories.name = subCategory.name
                         newSubcategories.type = subCategory.type
@@ -75,7 +110,21 @@ class PersistanceRealm {
                     newProduct.productsDescription = products.productsDescription
                     newProduct.colorName = products.colorName
                     newProduct.colorImageURL = products.colorImageURL
+//                    if products.colorImageData.isEmpty {
+//                        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                            newProduct.colorImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(newProduct.colorImageURL)")!)
+//                        }
+//                    } else {
+                        newProduct.colorImageData = products.colorImageData
+//                    }
                     newProduct.mainImage = products.mainImage
+//                    if products.mainImageData.isEmpty {
+//                        DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                            newProduct.mainImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(newProduct.mainImage)")!)
+//                        }
+//                    } else {
+                        newProduct.mainImageData = products.mainImageData
+//                    }
                     newProduct.productImages = List<productImagesRealm>()
                     for img in products.productImages {
                         let newProductImages = productImagesRealm()
@@ -99,13 +148,11 @@ class PersistanceRealm {
                     newProduct.oldPrice = products.oldPrice
                     newProduct.tag = products.tag
                     newProduct.attributes = List<attributesRealm>()
-                    if let attributes = products.attributes {
-                        for attribute in attributes {
-                            let newAttribute = attributesRealm()
-                            newAttribute.name = attribute.first!.key
-                            newAttribute.value = attribute.first!.value
-                            newProduct.attributes.append(newAttribute)
-                        }
+                    for attribute in products.attributes {
+                        let newAttribute = attributesRealm()
+                        newAttribute.name = attribute.first!.key
+                        newAttribute.value = attribute.first!.value
+                        newProduct.attributes.append(newAttribute)
                     }
                     realm.add(newProduct)
                 }
@@ -117,6 +164,7 @@ class PersistanceRealm {
     func loadProductInBasket(idSubCategories: String, products: [Products], productID: Int, mainImage: Data, size: String) {
         try! realm.write {
             let newProduct = ProductInBasketRealm()
+            newProduct.idSubCategories = idSubCategories
             newProduct.ProductID = productID
             newProduct.name = products[productID].name
             newProduct.mainImage = mainImage
@@ -141,18 +189,61 @@ class PersistanceRealm {
             category.name = categoryRealm.name
             category.sortOrder = categoryRealm.sortOrder
             category.iconImage = categoryRealm.iconImage
-            for cubCategoryRealm in categoryRealm.subcategories {
+            category.iconImageData = categoryRealm.iconImageData
+            for subCategoryRealm in categoryRealm.subcategories {
                 let subcategories = SubCategories()
-                subcategories.id = cubCategoryRealm.id
-                subcategories.iconImage = cubCategoryRealm.iconImage
-                subcategories.sortOrder = cubCategoryRealm.sortOrder
-                subcategories.name = cubCategoryRealm.name
-                subcategories.type = cubCategoryRealm.type
+                subcategories.id = subCategoryRealm.id
+                subcategories.iconImage = subCategoryRealm.iconImage
+                subcategories.iconImageData = subCategoryRealm.iconImageData
+                subcategories.sortOrder = subCategoryRealm.sortOrder
+                subcategories.name = subCategoryRealm.name
+                subcategories.type = subCategoryRealm.type
                 category.subcategories.append(subcategories)
             }
             categories.append(category)
         }
         return categories
+    }
+    
+    func downloadProducts(_ idSubCategories: String) -> [Products] {
+        
+        var products: [Products] = []
+        let productsRealm = realm.objects(ProductsRealm.self).filter("owner == '\(idSubCategories)'").array
+        
+        for productRealm in productsRealm {
+            let newProduct = Products()
+            newProduct.name = productRealm.name
+            newProduct.englishName = productRealm.englishName
+            newProduct.sortOrder = productRealm.sortOrder
+            newProduct.article = productRealm.article
+            newProduct.collection = productRealm.collection
+            newProduct.productsDescription = productRealm.productsDescription
+            newProduct.colorName = productRealm.colorName
+            newProduct.colorImageURL = productRealm.colorImageURL
+            newProduct.colorImageData = productRealm.colorImageData
+            newProduct.mainImage = productRealm.mainImage
+            newProduct.mainImageData = productRealm.mainImageData
+            for img in productRealm.productImages.array {
+                let newProductImages: [String: String] = ["imageURL" : img.imageURL, "sortOrder" : img.sortOrder]
+                newProduct.productImages.append(newProductImages)
+            }
+            for offer in productRealm.offers.array {
+                let newOffers: [String: String] = ["size" : offer.size, "productOfferID" : offer.productOfferID, "quantity" : offer.quantity]
+                newProduct.offers.append(newOffers)
+            }
+            for id in productRealm.recommendedProductIDs.array {
+                newProduct.recommendedProductIDs.append(id)
+            }
+            newProduct.price = productRealm.price
+            newProduct.oldPrice = productRealm.oldPrice
+            newProduct.tag = productRealm.tag
+            for attribute in productRealm.attributes.array {
+                let newAttribute: [String: String] = [attribute.name: attribute.value]
+                newProduct.attributes.append(newAttribute)
+            }
+            products.append(newProduct)
+        }
+        return products
     }
     
     func deleteCategories() {
@@ -174,3 +265,32 @@ extension Results {
         return self.count > 0 ? self.map { $0 } : []
     }
 }
+
+extension List {
+    var array: [Element] {
+        return self.count > 0 ? self.map { $0 } : []
+    }
+    
+    func toArray<T>(ofType: T.Type) -> [T] {
+            var array = [T]()
+            for i in 0 ..< count {
+                if let result = self[i] as? T {
+                    array.append(result)
+                }
+            }
+            return array
+        }
+}
+
+//extension List {
+//    func toArray<T>(ofType: T.Type) -> [T] {
+//        var array = [T]()
+//        for i in 0 ..< count {
+//            if let result = self[i] as? T {
+//                array.append(result)
+//            }
+//        }
+//
+//        return array
+//    }
+//}

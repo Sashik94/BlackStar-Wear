@@ -12,6 +12,7 @@ class SubCategoriesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imageSubCategories: UIImageView!
     @IBOutlet weak var nameSubCategories: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

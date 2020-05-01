@@ -12,6 +12,7 @@ class CategoriesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var imageCategories: UIImageView!
     @IBOutlet weak var nameCategories: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

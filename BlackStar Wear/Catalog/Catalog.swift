@@ -17,16 +17,17 @@ class CategoriesID: Decodable  {
 
 class Categories: Decodable {
     
-    var name: String
-    var sortOrder: Int
-//    var iconImage: Data
-    var iconImage: String
-    var subcategories: [SubCategories]
+    var name: String = ""
+    var sortOrder: Int = 0
+    var iconImage: String = ""
+    var iconImageData: Data = Data()
+    var subcategories: [SubCategories] = []
     
     enum CodingKeys: String, CodingKey {
         case name
         case sortOrder
         case iconImage
+//        case iconImageData
         case subcategories
     }
     
@@ -41,11 +42,14 @@ class Categories: Decodable {
             self.sortOrder = try container.decode(Int.self, forKey: .sortOrder)
         }
         
-//        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
-//            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
-//        } else {
-            self.iconImage = try container.decode(String.self, forKey: .iconImage)
-//        }
+        if let iconImageURL = try? container.decode(String.self, forKey: .iconImage) {
+            self.iconImage = iconImageURL
+//            DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                self.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageURL)")!)
+//            }
+        } else {
+//            self.iconImageData = try container.decode(Data.self, forKey: .iconImage)
+        }
         
         self.subcategories = try container.decode([SubCategories].self, forKey: .subcategories).sorted { $0.sortOrder < $1.sortOrder }
     }
@@ -54,6 +58,7 @@ class Categories: Decodable {
         self.name = ""
         self.sortOrder = 0
         self.iconImage = ""
+        self.iconImageData = Data()
         self.subcategories = []
     }
 }
@@ -61,8 +66,8 @@ class Categories: Decodable {
 class SubCategories: Decodable {
     
     var id: String
-//    var iconImage: Data = Data()
     var iconImage: String = ""
+    var iconImageData: Data = Data()
     var sortOrder: Int = 0
     var name: String = ""
     var type: String?
@@ -70,6 +75,7 @@ class SubCategories: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case iconImage
+//        case iconImageData
         case sortOrder
         case name
         case type
@@ -84,11 +90,14 @@ class SubCategories: Decodable {
             self.id = try container.decode(String.self, forKey: .id)
         }
         
-//        if let iconImageString = try? container.decode(String.self, forKey: .iconImage) {
-//            self.iconImage = try Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageString)")!)
-//        } else {
-            self.iconImage = try container.decode(String.self, forKey: .iconImage)
-//        }
+        if let iconImageURL = try? container.decode(String.self, forKey: .iconImage) {
+            self.iconImage = iconImageURL
+//            DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+//                self.iconImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(iconImageURL)")!)
+//            }
+        } else {
+//            self.iconImageData = try container.decode(Data.self, forKey: .iconImage)
+        }
         
         if let sortOrderString = try? container.decode(String.self, forKey: .sortOrder) {
             self.sortOrder = Int(sortOrderString)!
@@ -103,6 +112,7 @@ class SubCategories: Decodable {
     init() {
         self.id = ""
         self.iconImage = ""
+        self.iconImageData = Data()
         self.sortOrder = 0
         self.name = ""
 //        self.type = ""
@@ -111,22 +121,25 @@ class SubCategories: Decodable {
 
 class Products: Decodable {
     
-    var name: String
-    var englishName: String
-    var sortOrder: Int
+    var owner: String = ""
+    var name: String = ""
+    var englishName: String = ""
+    var sortOrder: Int = 0
     var article: String?
     var collection: String?
     var productsDescription: String?
-    var colorName: String
-    var colorImageURL: String
-    var mainImage: String
-    var productImages: [[String: String]]
-    var offers: [[String: String]]
-    var recommendedProductIDs: [String]
+    var colorName: String = ""
+    var colorImageURL: String = ""
+    var colorImageData: Data = Data()
+    var mainImage: String = ""
+    var mainImageData: Data = Data()
+    var productImages: [[String: String]] = []
+    var offers: [[String: String]] = []
+    var recommendedProductIDs: [String] = []
     var price: String?
     var oldPrice: String?
     var tag: String?
-    var attributes: [[String: String]]?
+    var attributes: [[String: String]] = []
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -164,9 +177,23 @@ class Products: Decodable {
         self.productsDescription = try? container.decode(String.self, forKey: .productsDescription)
         self.colorName = try container.decode(String.self, forKey: .colorName)
         
-        self.colorImageURL = try container.decode(String.self, forKey: .colorImageURL)
-
-        self.mainImage = try container.decode(String.self, forKey: .mainImage)
+        if let colorImageURL = try? container.decode(String.self, forKey: .colorImageURL) {
+            self.colorImageURL = colorImageURL
+            DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+                self.colorImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(colorImageURL)")!)
+            }
+        } else {
+            self.colorImageData = try container.decode(Data.self, forKey: .colorImageURL)
+        }
+        
+        if let mainImageURL = try? container.decode(String.self, forKey: .mainImage) {
+            self.mainImage = mainImageURL
+            DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos: .userInteractive, attributes: .concurrent).async {
+                self.mainImageData = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(mainImageURL)")!)
+            }
+        } else {
+            self.mainImageData = try container.decode(Data.self, forKey: .mainImage)
+        }
         
         //productImages
         self.productImages = try container.decode([[String: String]].self, forKey: .productImages)
@@ -186,7 +213,8 @@ class Products: Decodable {
         self.tag = try? container.decode(String.self, forKey: .tag)
         
         //attributes
-        self.attributes = try? container.decode([[String: String]].self, forKey: .attributes)
+        self.attributes = try container.decode([[String: String]].self, forKey: .attributes)
     }
     
+    init() { }
 }

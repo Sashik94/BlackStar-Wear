@@ -14,6 +14,7 @@ class SubCategoriesTableViewController: UITableViewController {
     let networkDataFetcher = NetworkDataFetcher()
     
     @IBOutlet var subCategoriesTableView: UITableView!
+    @IBOutlet weak var subCategoriesNavigationItem: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +27,6 @@ class SubCategoriesTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -49,9 +45,10 @@ class SubCategoriesTableViewController: UITableViewController {
         DispatchQueue(label: "com.Sashik.BlackStar-Wear", qos : .userInteractive, attributes: .concurrent).async {
             let cell = cell as! SubCategoriesTableViewCell
             let track = self.subCategories[indexPath.row]
-            let image = track.iconImage != "" ? self.networkDataFetcher.loadImage(urlImage: track.iconImage) : nil
+            let image = track.iconImageData.isEmpty && track.iconImage != "" ? self.networkDataFetcher.loadImage(urlImage: track.iconImage) : UIImage(data: track.iconImageData)
             DispatchQueue.main.async {
                 cell.imageSubCategories.image = image
+                cell.activityIndicator.stopAnimating()
             }
         }
     }
@@ -101,6 +98,7 @@ class SubCategoriesTableViewController: UITableViewController {
         if segue.identifier == "Products" {
             let PCVC = segue.destination as! ProductsCollectionViewController
             PCVC.idSubCategories = subCategories[indexPath.row].id
+            PCVC.productsNavigationItem.title = subCategories[indexPath.row].name
         }
     }
 

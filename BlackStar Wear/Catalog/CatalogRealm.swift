@@ -19,16 +19,16 @@ class CategoriesRealm: Object {
     
     @objc dynamic var name: String = ""
     @objc dynamic var sortOrder: Int = 0
-//    @objc dynamic var iconImage: Data = Data()
     @objc dynamic var iconImage: String = ""
+    @objc dynamic var iconImageData: Data = Data()
     var subcategories = List<SubCategoriesRealm>()
 }
 
 class SubCategoriesRealm: Object {
     
     @objc dynamic var id: String = ""
-//    @objc dynamic var iconImage: Data = Data()
     @objc dynamic var iconImage: String = ""
+    @objc dynamic var iconImageData: Data = Data()
     @objc dynamic var sortOrder: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var type: String? = nil
@@ -46,7 +46,9 @@ class ProductsRealm: Object {
     @objc dynamic var productsDescription: String?
     @objc dynamic var colorName: String = ""
     @objc dynamic var colorImageURL: String = ""
+    @objc dynamic var colorImageData: Data = Data()
     @objc dynamic var mainImage: String = ""
+    @objc dynamic var mainImageData: Data = Data()
     var productImages = List<productImagesRealm>()
     var offers = List<offersRealm>()
     var recommendedProductIDs = List<String>()
@@ -59,6 +61,7 @@ class ProductsRealm: Object {
 
 class ProductInBasketRealm: Object {
     
+    @objc dynamic var idSubCategories: String = ""
     @objc dynamic var ProductID: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var mainImage: Data = Data()
@@ -72,6 +75,7 @@ class ProductInBasketRealm: Object {
 class productImagesRealm: Object {
     
     @objc dynamic var imageURL: String = ""
+    @objc dynamic var imageData: Data = Data()
     @objc dynamic var sortOrder: String = ""
     
 }

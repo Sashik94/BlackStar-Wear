@@ -52,16 +52,20 @@ class BasketViewController: UIViewController {
         }
         priceLabel.text = ProductViewController().numberFormatter(String(sumPrice)) + " руб."
     }
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let basketTableViewCell = sender as! BasketTableViewCell
+        let indexPath = basketTableView.indexPath(for: basketTableViewCell)!//RealmViewController.records[indexPath.row]
+        if segue.identifier == "ProdutFromBasket" {
+            let PVC = segue.destination as! ProductViewController
+            PVC.productsID = productInBasket[indexPath.row].ProductID
+            PVC.productsRealm = productInBasket[indexPath.row].products.array
+            PVC.idSubCategories = productInBasket[indexPath.row].idSubCategories
+            PVC.productNavigationItem.title = productInBasket[indexPath.row].name
+            }
     }
-    */
-
 }
 
 extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
@@ -72,7 +76,7 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Basket cell", for: indexPath) as! BasketTableViewCell
-        let track = self.productInBasket[indexPath.row]
+        let track = productInBasket[indexPath.row]
         cell.imageBasket.image = nil
         cell.nameLabel.text = track.name
         cell.sizeLabel.text = track.size
@@ -117,12 +121,4 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
                configuration.performsFirstActionWithFullSwipe = true
                return configuration
     }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            PersistanceRealm.shared.deleteProduct(indexPath.row)
-//            reloadBasket()
-//            basketTableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
 }
