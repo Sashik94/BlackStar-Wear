@@ -23,7 +23,7 @@ class ProductsCollectionViewController: UICollectionViewController, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        products = PersistanceRealm.shared.downloadProducts(idSubCategories)
+//        products = PersistanceRealm.shared.downloadProducts(idSubCategories)
         if products.isEmpty {
             networkDataFetcher.urlString = urlString + idSubCategories
             networkDataFetcher.fetchTracksProducts { (productsJSON) in

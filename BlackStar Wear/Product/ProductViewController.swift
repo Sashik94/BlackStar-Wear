@@ -176,6 +176,19 @@ class ProductViewController: UIViewController {
         if let size = offer?.size {
             mainImage = try! Data(contentsOf: URL(string: "http://blackstarshop.ru/\(products[productsID].mainImage)")!)
             PersistanceRealm.shared.loadProductInBasket(idSubCategories: idSubCategories, products: products, productID: productsID, mainImage: mainImage, size: size)
+            let animateScreen = view.snapshotView(afterScreenUpdates: false)!
+            view.addSubview(animateScreen)
+            
+            let basketPoint = view.convert(tabBarController!.tabBar.getFrameForTabImageAt(index: 1)!, from: tabBarController!.tabBar)
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseIn, animations: {
+                
+                animateScreen.transform = .init(scaleX: 0.1, y: 0.1)
+                animateScreen.center = basketPoint.center //CGPoint(x: UIScreen.main.bounds.maxX, y: UIScreen.main.bounds.maxY)
+                animateScreen.alpha = 0.0
+            }) { (finished) in
+                animateScreen.removeFromSuperview()
+            }
             tabBarController?.tabBar.items?[1].badgeValue = String(realm.objects(ProductInBasketRealm.self).count)
             
         } else {
@@ -207,18 +220,21 @@ class ProductViewController: UIViewController {
             let indexPath = recommendCollectionView.indexPath(for: collectionViewCell)!//RealmViewController.records[indexPath.row]
             let PVC = segue.destination as! ProductViewController
             PVC.productsID = indexPath.row >= productsID ? indexPath.row + 1 : indexPath.row
+            PVC.idSubCategories = idSubCategories
             PVC.products = products
+            PVC.productNavigationItem.title = products[indexPath.row].name
         }
     }
     
     func fillingNewController(_ id: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "ProductViewController") as! ProductViewController
-        vc.productsID = id
-        vc.products = products
-        vc.productNavigationItem.title = products[id].name
+        let PVC = storyboard.instantiateViewController(identifier: "ProductViewController") as! ProductViewController
+        PVC.productsID = id
+        PVC.idSubCategories = idSubCategories
+        PVC.products = products
+        PVC.productNavigationItem.title = products[id].name
         definesPresentationContext = false
-        show(vc, sender: nil)
+        show(PVC, sender: nil)
     }
 }
 

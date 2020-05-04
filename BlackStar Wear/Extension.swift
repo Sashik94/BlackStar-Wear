@@ -52,6 +52,51 @@ extension UIButton{
 
 }
 
+extension UITabBar {
+    
+    func getFrameForTabAt(index: Int) -> CGRect? {
+        if let tab = getTabViewAt(index: index) {
+            return tab.frame
+        }
+        return nil
+    }
+    
+    func getFrameForTabImageAt(index: Int) -> CGRect? {
+        if let tab = getTabViewAt(index: index),
+            let imageView = getImageViewForTabAt(index: index) {
+            return tab.convert(imageView.frame, to: self)
+        }
+        return nil
+    }
+    
+    func getTabViewAt(index: Int) -> UIView? {
+        var tabs = self.subviews.compactMap({ $0 as? UIControl })
+        tabs.sort(by: { $0.frame.origin.x < $1.frame.origin.y })
+        if index < tabs.count {
+            return tabs[index]
+        }
+        return nil
+    }
+    
+    func getImageViewForTabAt(index: Int) -> UIView? {
+        if let tab = getTabViewAt(index: index) {
+            return tab.subviews.compactMap({ $0 }).first
+        }
+        return nil
+    }
+    
+    func setFrameBadge() {
+        
+    }
+    
+}
+
+extension CGRect {
+    var center: CGPoint {
+        return CGPoint(x: self.midX, y: self.midY)
+    }
+}
+
 //@IBDesignable class ImageView: UIImageView {
 //
 //    @IBInspectable var cornerRadius: CGFloat {

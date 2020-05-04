@@ -97,7 +97,7 @@ class PersistanceRealm {
     func loadProducts(_ allProducts: [Products], _ idSubCategories: String) {
         try! realm.write {
             for products in allProducts {
-                if (realm.objects(ProductsRealm.self).filter("article == '\(products.article!)' && colorName == '\(products.colorName)'").first != nil) {
+                if (realm.objects(ProductsRealm.self).filter("article == '\(products.article!)' && colorName == '\(products.colorName)' && owner == '\(idSubCategories)'").first != nil) {
                     continue
                 } else {
                     let newProduct = ProductsRealm()

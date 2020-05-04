@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,7 +19,6 @@
 		3B8D2CB32414CF8800BD7B9D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8D2CB22414CF8800BD7B9D /* NetworkService.swift */; };
 		3B9EF4422444DFC40002086A /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF4412444DFC40002086A /* BasketViewController.swift */; };
 		3B9EF4442444DFD70002086A /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF4432444DFD70002086A /* BasketTableViewCell.swift */; };
-		3B9EF4462444E4B20002086A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B9EF4452444E4B20002086A /* RealmSwift.framework */; };
 		3B9EF44A244624B40002086A /* CatalogRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF449244624B40002086A /* CatalogRealm.swift */; };
 		3BBABBB6240C01FE00F1F9FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBABBB5240C01FE00F1F9FE /* AppDelegate.swift */; };
 		3BBABBB8240C01FE00F1F9FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBABBB7240C01FE00F1F9FE /* SceneDelegate.swift */; };
@@ -31,16 +30,13 @@
 		3BBABBCF240D957200F1F9FE /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBABBCE240D957200F1F9FE /* CategoriesTableViewCell.swift */; };
 		3BCE22B02421245A0001C159 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE22AF2421245A0001C159 /* ProductViewController.swift */; };
 		3BFCADC62434D60100043C23 /* SelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFCADC52434D60100043C23 /* SelectionTableViewCell.swift */; };
-		57BB68449E7470B7BC9F2A20 /* Pods_BlackStar_Wear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */; };
+		AE7C89817E90CDD643517BBA /* libPods-BlackStar Wear.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3BFE624BE9037CEB9E1EC /* libPods-BlackStar Wear.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0184642940F3BFFCB133937C /* Pods-BlackStar Wear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.release.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.release.xcconfig"; sourceTree = "<group>"; };
-		3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackStar_Wear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B11F887242D482D00D2B5E1 /* RecommendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendCollectionViewCell.swift; sourceTree = "<group>"; };
 		3B199D4D2423D54E00F5AEB6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		3B22DDFD2431029200515A05 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
-		3B22DE0F24314CC200515A05 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B5B8D30241977C000331C58 /* SubCategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		3B5B8D32241977F300331C58 /* SubCategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesTableViewCell.swift; sourceTree = "<group>"; };
 		3B7D0CB3241E806B0077B610 /* ProductsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +46,6 @@
 		3B8D2CB22414CF8800BD7B9D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3B9EF4412444DFC40002086A /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
 		3B9EF4432444DFD70002086A /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
-		3B9EF4452444E4B20002086A /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B9EF449244624B40002086A /* CatalogRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRealm.swift; sourceTree = "<group>"; };
 		3BBABBB2240C01FE00F1F9FE /* BlackStar Wear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BlackStar Wear.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BBABBB5240C01FE00F1F9FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,10 +58,10 @@
 		3BBABBCC240D93ED00F1F9FE /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
 		3BBABBCE240D957200F1F9FE /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
 		3BCE22AF2421245A0001C159 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
-		3BF0078C24585B0A00B59335 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BF0079024586DC100B59335 /* libRealmSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRealmSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFCADC52434D60100043C23 /* SelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewCell.swift; sourceTree = "<group>"; };
-		85BEAAF049C857F9C9A6EF6A /* Pods-BlackStar Wear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.debug.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.debug.xcconfig"; sourceTree = "<group>"; };
+		706BF7C02732324F1D50E3BF /* Pods-BlackStar Wear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.debug.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.debug.xcconfig"; sourceTree = "<group>"; };
+		74F3BFE624BE9037CEB9E1EC /* libPods-BlackStar Wear.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackStar Wear.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD633A7AEDCC1BA239C56198 /* Pods-BlackStar Wear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackStar Wear.release.xcconfig"; path = "Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B9EF4462444E4B20002086A /* RealmSwift.framework in Frameworks */,
-				57BB68449E7470B7BC9F2A20 /* Pods_BlackStar_Wear.framework in Frameworks */,
+				AE7C89817E90CDD643517BBA /* libPods-BlackStar Wear.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,8 +137,8 @@
 			children = (
 				3BBABBB4240C01FE00F1F9FE /* BlackStar Wear */,
 				3BBABBB3240C01FE00F1F9FE /* Products */,
-				DFCEC5E2528FEE91484EB9AC /* Pods */,
-				CFD57DFAF2544B41123151C6 /* Frameworks */,
+				6E6E4CF94961B88F7DDEC4B7 /* Pods */,
+				DDF8312ACCF9626371FC039B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,25 +173,21 @@
 			path = "BlackStar Wear";
 			sourceTree = "<group>";
 		};
-		CFD57DFAF2544B41123151C6 /* Frameworks */ = {
+		6E6E4CF94961B88F7DDEC4B7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3BF0079024586DC100B59335 /* libRealmSwift.a */,
-				3BF0078C24585B0A00B59335 /* Realm.framework */,
-				3B9EF4452444E4B20002086A /* RealmSwift.framework */,
-				3B22DE0F24314CC200515A05 /* Alamofire.framework */,
-				3344BED79AE5271C8EEFB607 /* Pods_BlackStar_Wear.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DFCEC5E2528FEE91484EB9AC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				85BEAAF049C857F9C9A6EF6A /* Pods-BlackStar Wear.debug.xcconfig */,
-				0184642940F3BFFCB133937C /* Pods-BlackStar Wear.release.xcconfig */,
+				706BF7C02732324F1D50E3BF /* Pods-BlackStar Wear.debug.xcconfig */,
+				FD633A7AEDCC1BA239C56198 /* Pods-BlackStar Wear.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DDF8312ACCF9626371FC039B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				74F3BFE624BE9037CEB9E1EC /* libPods-BlackStar Wear.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,11 +197,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3BBABBC9240C01FF00F1F9FE /* Build configuration list for PBXNativeTarget "BlackStar Wear" */;
 			buildPhases = (
-				A07FEC70F2856A4A8FF8F746 /* [CP] Check Pods Manifest.lock */,
+				2A4766945F51D2B0B19F3D8C /* [CP] Check Pods Manifest.lock */,
 				3BBABBAE240C01FE00F1F9FE /* Sources */,
 				3BBABBAF240C01FE00F1F9FE /* Frameworks */,
 				3BBABBB0240C01FE00F1F9FE /* Resources */,
-				B2A676E1B635327D4D9151D6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -269,7 +258,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A07FEC70F2856A4A8FF8F746 /* [CP] Check Pods Manifest.lock */ = {
+		2A4766945F51D2B0B19F3D8C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -289,23 +278,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B2A676E1B635327D4D9151D6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlackStar Wear/Pods-BlackStar Wear-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -476,7 +448,7 @@
 		};
 		3BBABBCA240C01FF00F1F9FE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85BEAAF049C857F9C9A6EF6A /* Pods-BlackStar Wear.debug.xcconfig */;
+			baseConfigurationReference = 706BF7C02732324F1D50E3BF /* Pods-BlackStar Wear.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -498,7 +470,7 @@
 		};
 		3BBABBCB240C01FF00F1F9FE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0184642940F3BFFCB133937C /* Pods-BlackStar Wear.release.xcconfig */;
+			baseConfigurationReference = FD633A7AEDCC1BA239C56198 /* Pods-BlackStar Wear.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";

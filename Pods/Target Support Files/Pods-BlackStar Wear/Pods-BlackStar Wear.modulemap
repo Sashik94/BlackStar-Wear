@@ -1,4 +1,4 @@
-framework module Pods_BlackStar_Wear {
+module Pods_BlackStar_Wear {
   umbrella header "Pods-BlackStar Wear-umbrella.h"
 
   export *
